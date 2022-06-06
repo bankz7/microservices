@@ -8,7 +8,7 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "account", uniqueConstraints = {@UniqueConstraint(columnNames = {"employee_id"})})
+@Table(name = "employee", uniqueConstraints = {@UniqueConstraint(columnNames = {"employee_id"})})
 @Setter
 @Getter
 @NoArgsConstructor
@@ -16,18 +16,18 @@ import javax.persistence.*;
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "employee_id", nullable = false)
-    private String employeeId;
+    @Column(name = "employee_id")
+    public int employeeId;
 
     @Column(name = "employee_name")
-    private String name;
+    public String name;
 
     @Column(name = "position")
-    private String position;
+    public String position;
 
     @Column(name = "organization_id")
-    private Integer organizationId;
+    public Integer organizationId;
 
     @Column(name = "department_id")
-    private Integer departmentId;
+    public Integer departmentId;
 }
