@@ -1,6 +1,9 @@
 package com.badin.service.employee;
 
+import com.badin.service.department.Department;
+import com.badin.service.department.DepartmentClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,6 +13,9 @@ public class EmployeeService {
     @Autowired
     private EmployeeRepository employeeRepository;
 
+    @Autowired
+    private DepartmentClient departmentClient;
+
     public List<Employee> findAllEmployee() {
         return employeeRepository.findAll();
     }
@@ -18,7 +24,11 @@ public class EmployeeService {
         return employeeRepository.findById(id).orElse(null);
     }
 
-    public Employee addNewEmployee(Employee employee) {
+    public Employee addNewEmployee(Employee employee) throws Exception {
+        Department department = departmentClient.findByDepartmentId(employee.departmentId);
+        if(department == null){
+            throw new Exception("Department not found");
+        }
         return employeeRepository.save(employee);
     }
 
